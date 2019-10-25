@@ -1,0 +1,65 @@
+
+5. Broken Access Control
+-------------------------
+-------------------------
+
+	Restrictions on what authenticated users are allowed to do are often not properly enforced.
+	Attackers can exploit these flaws to access unauthorized functionality and/or data, such as access
+	other users' accounts, view sensitive files, modify other users’ data, change access rights, etc.
+
+	One way to discover Broken Access Control is to browse the website while logged in and log all pages visited. 
+	The next step is then to log out and revisit all pages. 
+	If content that should only be available to logged-in users is shown on these pages, the website is not vulnerable.
+
+	Another way to discover Broken Access Control is to simply bruteforce different paths.
+	If any user can access those, this would be considered a vulnerability. 
+	This is also called forced browsing, – in simplified terms, accessing resources that are not referenced by the application, but can still be accessed.
+
+	Essentially, broken access controls occur whenever users who are not authorised to access files or functionality can access them anyway.
+	A basic method of exploiting access control flaws in an application's code is known as forced browsing.
+
+
+    Authentication - correctly identifying a user when they return to the application.
+    --------------
+    Authorization - deciding what actions a user should and should not be able to perform once they have been authenticated.
+    -------------
+    Permission Checking - evaluating authorization at the point-in-time when a user attempts to perform an action.
+    -------------------
+
+	authentication  >>>  concerns providinng user identity, 
+	access control  >>>  concerns what the user (authenticated or not) can access on the system.
+
+
+Common access control vulnerabilities include Due to:
+-----------------------------------------------------
+
+	   1. Bypassing access control checks by modifying the URL, internal application state, or the HTML page, or simply using a custom API attack tool
+	   2. Allowing the primary key to be changed to another's users record, permitting viewing or editing someone else's account.
+	   3. Elevation of privilege. Acting as a user without being logged in, or acting as an admin when logged in as a user.
+	   4. Force browsing to authenticated pages as an unauthenticated user or to privileged pages as a standard user. Accessing API with missing access controls for POST, PUT and DELETE.
+	   5. CORS misconfiguration allows unauthorized API access.
+	   6. Metadata manipulation, such as replaying or tampering with a JSON Web Token (JWT) access control token or a cookie or hidden field manipulated to elevate privileges, or abusing JWT invalidation
+
+
+Solutions
+---------
+	Application structure can mitigate access control problems by implementing additional layers of security to protect sensitive data.
+	A user signs in from a new device or location, and cannot login until entering an MFA code sent by the app
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Authorization:
+---------------
+	Directory Traversal : By exploiting this kind of vulnerability, an attacker is able to read directories or files which they normally couldn’t read, 
+				access data outside the web document root, or include scripts and other kinds of files from external websites.
+
+	Testing for Bypassing Authorization Schema : try get access to reserved functions and resources.
+	Testing for Privilege escalation : Privilege escalation occurs when a user gets access to more resources or functionality than they are normally allowed,
+	IDOR

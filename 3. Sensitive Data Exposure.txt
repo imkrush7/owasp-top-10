@@ -1,0 +1,49 @@
+
+3. Sensitive Data Exposure:
+----------------------------
+----------------------------
+
+Sensitive data exposure vulnerabilities can occur when an application does not adequately protect sensitive information from being disclosed to attackers.
+
+Potential impact is all depends on what kind of data is at risk of being exposed.
+
+	This is not a vulnerability that you can look for in the same sense as other more traditional vulnerabilities. 
+	Most vulnerabilities within this category cannot be scanned for due to two main reasons:
+
+		1. To determine risk, it must be decided what information is considered sensitive, which can be a hard task to carry out automatically.
+		2. An external pentester cannot know whether internal data is encrypted or not as that is not exposed.
+
+
+Example of vulnerable application
+----------------------------------
+
+	1. Data stored in plain text, such as passwords or credit card data (see the first well-known event)
+	2. Lack of HTTPS on authenticated pages
+	3. Hashed passwords with lack of salt, making the password easily cracked
+
+
+1: Credit card encryption
+	An application encrypts credit card numbers in a database using automatic database encryption. 
+	However, this means it also decrypts this data automatically when retrieved, allowing a SQL injection flaw to retrieve credit card numbers in clear text.
+
+2: SSL is not used for all authenticated pages
+	Attacker simply monitors network traffic, and steals the user’s session cookie. 
+	Attacker then replays this cookie and hijacks the user’s session, accessing the user’s private data.
+
+3: The password database uses unsalted hashes to store everyone’s passwords
+	A file upload flaw allows an attacker to retrieve the password file. All of the unsalted hashes can be exposed with a rainbow table of precalculated hashes.
+
+
+
+
+Prevention
+-----------
+	
+There are more things to look for when securing data, but what matters most is understanding what data is considered sensitive,
+
+    1. The data is never stored in clear text. Encrypt data during transport and at rest.
+    2. The data is never transmitted in clear text. Example between database and server, or over the internet.
+    3. The algorithms used to encrypt the data are considered strong enough.
+    4. The generation of the keys is secure.
+    5. Browser headers are set to not cache when the sensitive data is presented to end-user.
+

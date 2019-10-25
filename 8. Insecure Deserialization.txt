@@ -1,0 +1,34 @@
+
+8. Insecure Deserialization
+----------------------------
+----------------------------
+
+	it’s possible for an attacker to abuse these deserialization features when the application is deserializing untrusted data which the attacker controls. 
+	Successful insecure deserialization attacks could allow an attacker to carry out DoS attacks, authentication bypasses and remote code execution attacks.
+	The trouble however, starts when deserializing untrusted user input.
+
+
+Serialization refers to a process of converting an object into a format which can be persisted to disk, sent through streams, or sent over a network.
+-------------
+Deserialization on the other hand, is the opposite of serialization, that is, transforming serialized data coming from a file, stream or network socket into an object.
+---------------
+
+
+
+
+Example:
+---------
+A PHP forum uses PHP object serialization to save a "super" cookie, containing the user's user ID, role, password hash, and other state:
+
+          a:4:{i:0;i:132;i:1;s:7:"Mallory";i:2;s:4:"user"; i:3;s:32:"b6a8b3bea87fe0e05022f8f3c88bc960";}
+      
+
+An attacker changes the serialized object to give themselves admin privileges:
+
+          a:4:{i:0;i:1;i:1;s:5:"Alice";i:2;s:5:"admin"; i:3;s:32:"b6a8b3bea87fe0e05022f8f3c88bc960";} 
+      
+
+
+Prevention:
+------------
+The only safe architectural pattern is not to accept serialized objects from untrusted sources or to use serialization mediums that only permit primitive data types.

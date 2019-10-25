@@ -1,0 +1,83 @@
+
+Broken Authentication & Session Management:
+--------------------------------------------
+--------------------------------------------
+
+	Broken authentication happens mostly due to poor implementation of application functions related to authentication and session management, 
+	thus allowing attackers to compromise passwords, keys or session tokens, to exploit other implementation flaws to assume users’ identities 
+	temporarily or permanently.
+
+>>>>
+	These types of weaknesses can allow an attacker to either capture or bypass the authentication methods that are used by a web application.
+	The goal of an attack is to take over one or more accounts and for the attacker to get the same privileges as the attacked user.
+
+
+Happens Due To :::
+--------------
+    1. It Permits automated attacks such as credential stuffing, where the attacker has a list of valid usernames and passwords.
+    2. Permits brute force or other automated attacks.
+    3. Permits default, weak, or well-known passwords.
+    4. Uses weak or ineffective credential recovery and forgot-password processes, such as "knowledge-based answers", which cannot be made safe.
+    5. Uses plain text, encrypted, or weakly hashed passwords (see A3:2017-Sensitive Data Exposure).
+    6. Has missing or ineffective multi-factor authentication.
+    7. Exposes Session IDs in the URL (e.g., URL rewriting).
+    8. Does not rotate Session IDs after successful login.
+    9. Does not properly invalidate Session IDs. User sessions or authentication tokens aren't properly invalidated during logout or a period of inactivity.
+
+
+	Since HTTP is a stateless protocol (i.e., web servers respond to client requests without linking them to each other) 
+	      ----	
+	it requires a third party solution to handle session management.
+
+
+
+Example 
+--------
+		A webshop put the session id in the url. The links will look like this: 
+			http://example.com/?product=chair&session=51233123
+	
+	1. Application session timeouts aren't set properly.
+	2. Predictable login credentials
+	3. Credential stuffing 
+	4. Passwords are not properly hashed and salted
+	5. Rewriting URL with Session Id
+
+
+
+How to prevent Broken Authentication
+-------------------------------------
+
+	1. Temporarily blocking an IP that originated a high number of authentication errors in a brief period
+	2. Make strong password policy i.e length and complexity.
+	3. Implement multi-factor authentication to prevent automated, credential stuffing, brute force, and stolen credential re-use attacks.
+	4. Implement weak-password checks, such as testing new or changed passwords against a list of the top 10000 worst passwords.
+	5. Limit or increasingly delay failed login attempts.
+	6. Use a server-side, secure, built-in session manager that generates a new random session ID with high entropy after login. 
+	7. Session IDs should not be in the URL, be securely stored and Session IDs should timeout.
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Authentication:
+----------------
+
+	Testing for Credential transport over an encryption channel
+	Testing for default credential
+	Testing for weak lock out mechanism : Account lockout mechanisms are used to mitigate brute force password guessing attacks. 
+						Account lockout mechanisms are used to mitigate brute force password guessing attacks. 
+	Testing for authentication bypass schemas: 1. SQL injection
+						   2. Direct page request (forced browsing)
+						   3. Parameter modification
+						   4. Session ID prediction
+	Testing for Vulnerable Remember Password
+	Testing for Browser cache weakness
+	Testing for Weak password policy
+	Testing for Weak security question/answer
+	Testing for weak password change or reset functionalities 
+	Testing for Weaker authentication in alternative channel

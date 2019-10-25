@@ -1,0 +1,72 @@
+
+10. Insufficient Logging & Monitoring:
+---------------------------------------
+---------------------------------------
+
+Log
+----
+Companies are maintaining the log files to deliver a continuous trace of everything, which happens with their systems and data.
+
+Monitoring
+-----------
+While logs tell an overview of what has already occurred, monitoring can provide an overview of what is presently happening.
+
+
+
+
+Exploitation of insufficient logging and monitoring is the bedrock of nearly every major incident.
+Attackers rely on the lack of monitoring and timely response to achieve their goals without being detected. 
+
+The attackers action should be recorded sufficiently to understand what damages they may have inflicted.
+
+Insufficient logging and monitoring vulnerability occurs when the security-critical events aren’t logged properly, and the system is not monitoring the current happenings
+
+While insufficient logging and monitoring is too abstract to be a direct attack vector, it affects the detection and response to every single breach.
+
+
+
+
+How Do You Detect Insufficient Logging & Monitoring?
+-----------------------------------------------------
+When an attacker tries to exploit a vulnerability, they spend a lot of time probing an application or system to find these vulnerabilities. 
+In the event a system doesn’t have sufficient logging and monitoring in place, the attacker is free to leisurely explore for flaws and weaknesses, 
+increasing the chance of successfully finding and exploiting an existing vulnerability.
+
+
+Example 1: 
+------------
+	A small startup falls victim to a brute force attack to break an employee’s password. 
+	Unfortunately, the victim system does not create alerts for failed login attempts so the attacker has plenty of time to keep trying. Finally gained the	 entry.
+
+
+
+Which events to log
+--------------------
+    Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values
+    Output validation failures e.g. database record set mismatch, invalid data encoding
+    Authentication successes and failures
+    Authorization (access control) failures
+    Session management failures e.g. cookie session identification value modification
+    Application errors and system events e.g. syntax and runtime errors, connectivity problems, performance issues, third party service error messages, file system errors, file upload virus detection, configuration changes
+    Application and related systems start-ups and shut-downs, and logging initialization (starting, stopping or pausing)
+
+
+also include event attributes like:
+
+	when > Log date and time 
+	where > Code location, Application Address, Service, etc
+	who > attacker ip address, device name, user identity if authenticated
+	what > Description
+
+
+
+
+How to prevent Insufficient Logging and Monitoring
+----------------------------------------------------
+    Ensure all login, access control failures, and server-side input validation failures can be logged 
+    Ensure that logs are generated in a format that can be easily consumed by a centralized log management solutions.
+    Establish effective monitoring and alerting such that suspicious activities are detected and responded to in a timely fashion.
+    Establish or adopt an incident response and recovery plan.
+
+
+

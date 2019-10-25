@@ -1,0 +1,113 @@
+
+2. Cros Site Scripting Attack [XSS]
+-------------------------------------
+-------------------------------------
+#php
+	> str_replace('<script>', '', $userInput); 
+	> stripslashes($userInput); 
+	> mysql_real_escape_string($userInput); 
+	> htmlspecialchars($userInput); 
+#java
+	> Pattern scriptPattern = Pattern.compile("XSS Payloads", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+	  value = scriptPattern.matcher(value).replaceAll("");
+
+
+
+	An XSS vulnerability arises when web applications take data from users and dynamically include it in web pages without properly validating the data. 
+	XSS vulnerabilities allow an attacker to execute arbitrary commands and display arbitrary content in a victim user's browser. 
+	A successful XSS attack leads to an attacker controlling the victim’s browser or account on the vulnerable web application.
+
+	Malicious script is being injected into the code and then sent as the output to the final user.
+
+
+Issue:   Input coming into web applications is not validated, Output to the browser is not HTML encoded
+--------
+Prevention:       Data validation, Filtering, Escaping
+------------
+
+
+
+
+Reflected XSS (Non-Persistent)   type II 
+-------------------------------------------------------
+	Reflected Cross-site Scripting (XSS) occur when an attacker injects browser executable code within a single HTTP response. 	
+	Reflected XSS code is not being saved permanently. 
+	Since the attack payload is delivered and executed via a single request and response
+	In this case, the malicious code is being reflected in any website result.
+	It is non-persistent and only impacts users who open a maliciously crafted link or third-party web page
+
+
+
+Stored XSS (Persistent)    type I 
+-----------------------------------------------
+	Stored XSS occurs when a web application gathers input from a user which might be malicious, and then stores that input in a data store for later use. 
+	The input that is stored is not correctly filtered. 
+	As a consequence, the malicious data will appear to be part of the web site and run within the user’s browser under the privileges of the web application. 
+
+	Consider a web application that allows users to enter a username that is displayed on each user’s profile page. 
+	The application stores each username in a local database. 
+	A malicious user notices that the web application fails to sanitize the username field and inputs malicious JavaScript code as part of their username. 
+	When other users view the attacker’s profile page, the malicious code automatically executes in the context of their session.
+
+
+
+DOM Based XSS    type 0
+------------------------
+
+					DOM
+					----
+					> DOM is Document Object Model
+					> With the help of DOM, JavaScript can access and change all the elements of an HTML document.
+					> When a web page is loaded, the browser creates a Document Object Model of the page.
+					> With the object model, JavaScript gets all the power it needs to create dynamic HTML
+
+
+	This attack occurs due to modification of DOM
+
+	where the vulnerability is in the client-side code rather than the server-side code.
+	In DOM-based XSS, the malicious JavaScript is executed at some point after the page has loaded, 
+	as a result of the page's legitimate JavaScript treating user input in an unsafe way.	
+
+When a client-side script is executed, it can use the DOM of the HTML page where the script runs. 
+The script can access various properties of the page and change their values.
+
+In reflective and stored Cross-site scripting attacks you can see the vulnerability payload in the response page 
+but in DOM based cross-site scripting, the HTML source code and response of the attack will be exactly the same, i.e. the payload cannot be found in the response. 
+It can only be observed on runtime or by investigating the DOM of the page.
+
+example
+-------
+	In a DOM-based XSS attack, the malicious string is not actually parsed by the victim's browser until the website's legitimate JavaScript is executed.
+
+    1. The attacker crafts a URL containing a malicious string and sends it to the victim.
+    2. The victim is tricked by the attacker into requesting the URL from the website.
+    3. The website receives the request, but does not include the malicious string in the response.
+    4. The victim's browser executes the legitimate script inside the response, causing the malicious script to be inserted into the page.
+    5. The victim's browser executes the malicious script inserted into the page, sending the victim's cookies to the attacker's server.
+
+
+
+
+
+
+Prevention
+-----------
+-----------
+
+
+1. Escaping
+
+By escaping user input, key characters in the data received by a web page will be prevented from being interpreted in any malicious way. 
+In essence, you’re censoring the data your web page receives in a way that will disallow the characters – especially < and > characters – from being rendered, which otherwise could cause harm to the application and/or users.
+
+
+2. Validating Input
+
+Validating input is the process of ensuring an application is rendering the correct data and preventing malicious data from doing harm to the site, database, and users. 
+Whereas blacklisting, or disallowing certain, predetermined characters in user input, disallows only known bad characters, whitelisting only allows known good characters and is a better method for preventing XSS attacks as well as others.
+
+
+3. Sanitizing
+
+Sanitizing data is a strong defense, but should not be used alone to battle XSS attacks. It’s totally possible you’ll find the need to use all three methods of prevention in working towards a more secure application.
+Sanitizing user input is especially helpful on sites that allow HTML markup, to ensure data received can do no harm to users as well as your database by scrubbing the data clean of potentially harmful markup, changing unacceptable user input to an acceptable format.

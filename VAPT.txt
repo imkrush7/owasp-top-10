@@ -1,0 +1,58 @@
+
+
+Vulnerability Assessment and Penetration Testing
+-------------------------------------------------
+-------------------------------------------------
+
+
+What is Vulnerability Assessment?
+----------------------------------
+	A vulnerability assessment (VA) is a systematic technical approach to find the security loop holes in a network or software system. 
+	VA is entirely a process of searching and finding, with an objective that none of the loop holes are missed. 
+	It primarily adopts a scanning approach which is performed by using tools as well as manually. 
+	The outcome of a VA process is report showing all vulnerabilities, which are categorized based on their severity. 
+	This report is further used for the next step which is penetration testing. 
+	VA is usually a non-intrusive process and can be carried out without jeopardizing the IT infrastructure or application’s operations.
+
+
+What is Penetration Testing?
+-----------------------------
+	A penetration test (PT) is a proof-of-concept approach to actually explore and exploit a vulnerability. 
+	This process ensures that the vulnerability really exists and further such exploitation can result into an impactful damage to the application or network. 
+	The PT process is mostly intrusive and can actually cause damage to the systems, hence a lot of precaution needs to be taken before planning such a test. 
+	The outcome of a PT is typically an evidence in the form of a screen-shot or log which substantiates the finding and can be a useful aid towards the fixation. 
+
+	As a summary, below are the steps entailed in the VAPT process.
+		1. Scan the network or application
+		2. Search for security flaws		
+		3. Exploit the security flaws
+		4. Prepare report
+
+
+
+Difference between VA and PT
+-----------------------------
+	VA can be carried out using automated tools, while a PT in almost all cases is a manual process. 
+	This is because PT essentially simulates what real hackers would do to your network or application. 
+	Refer to the diagrams showing VAPT process for network and web applications.
+
+
+
+
+	VAPT Tools
+	-----------
+	   1. Nmap
+	   2. Acunetix
+	   3. Nessus
+	   4. OpenVAS
+	   5. Nexpose
+	   6. BurpSuite (PT)
+	   7. Metasploit (PT)
+
+
+
+
+A false positive is when a vulnerability actually does not exist but it is reported. 
+  --------------
+A false negative is when a vulnerability actually exists but it is not reported. 
+  --------------

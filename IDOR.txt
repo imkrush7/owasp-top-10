@@ -1,0 +1,18 @@
+
+Insecure Direct Object Reference
+---------------------------------
+---------------------------------
+
+	IDOR is a permission-based vulnerability which allows an attacker to access or modify resources belonging to other users of the web application.
+
+	Insecure Direct Object References allow attackers to bypass authorization and access resources directly by modifying the value
+	of a parameter that used to directly point to an object
+
+	The basic fundamental behind IDOR is that an endpoint of a web application tries to display or modify some resource such as a profile, image, or file using a 
+	user-supplied identifire in the request but doesn't check whether the user has enough permission to accomplish the task.
+
+
+mitigation
+-----------
+	if the users are allowed to access only their profile, we can use the logged-in user’s ID in the session to locate it, 
+	thus eliminating the need for passing id as a URL parameter.

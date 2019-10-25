@@ -1,0 +1,95 @@
+
+
+4. XML External Entity:
+------------------------
+------------------------
+An XML External Entity attack is a type of attack against an application that parses XML input. 
+This attack occurs when XML input containing a reference to an external entity is processed by a weakly configured XML parser. 
+This attack may lead to the disclosure of confidential data, denial of service, server side request forgery, port scanning from the perspective of the machine 
+where the parser is located
+
+
+	XML is contain names of fields and their value. 
+	In addition to just storing strings, it can also contain links to other files or resources and this is where the problem arises. 
+	When the XML document is parsed, the XML parser will follow the link and read the linked document. 
+	Assuming the attacker can see the output of the parsed XML document, this gives them the ability to read local files on the server.
+
+	Such an attack is called XXE – XML External Entities, as it abuses those external entities/links.
+
+
+
+The most common XXE use case is to read local files on the server.
+This file is then either shown to the attacker directly on the website or sent to a server controlled by them.
+
+XXE can lead to SSRF, i.e. forcing the parser to make network requests within the local network.	
+
+
+Using recursive linking can also lead to DoS, the most common way to do this is called the Billion Laughs Attack. 
+In short, it is possible to force the XML parser to consume all the server’s resources until it crashes.
+
+
+	Parameter Entities
+	------------------
+		In addition to general entities, XML also supports parameter entities. Parameter entities are only used in Document Type Definitions (DTDs).
+		A parameter entity starts with the % character. This character instructs the XML parser that a parameter entity (not a general entity).
+
+
+
+
+
+How to discover
+----------------
+1. The easiest way to test for this vulnerability is to upload an XML document that tries to read an innocent local file, and see whether it succeeds.
+2. A more proper way to do this is to go through the configuration for the XML parser and make sure External Entities are disabled
+
+
+
+Exploitability
+---------------
+XXE is easy to exploit. All the attacker needs is the ability to upload XML documents that are then parsed. 
+Exploiting the vulnerability does not require much skill beyond this.
+
+
+
+Example
+--------
+
+1. When the following XML file is parsed and the result displayed to the user/attacker, it will contain the data of file://etc/passwd.
+
+	<?xml version="1.0" encoding="ISO-8859-1"?>
+	   <!DOCTYPE foo [
+	   <!ELEMENT foo ANY >
+	   <!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
+	   <foo>&xxe;</foo>
+
+
+
+2. attacker can use XML entities to cause a denial of service by embedding entities within entities. 
+   This attack is commonly referred to as the Billion Laughs attack.
+					      ----------------------
+
+	<?xml version="1.0" encoding="ISO-8859-1"?> 
+	<!DOCTYPE foo [
+		<!ELEMENT foo ANY>
+		<!ENTITY bar "World ">
+		<!ENTITY t1 "&bar;&bar;">
+		<!ENTITY t2 "&t1;&t1;&t1;&t1;">
+		<!ENTITY t3 "&t2;&t2;&t2;&t2;&t2;">
+	]>
+	<foo>	
+		Hello &t3;
+	</foo>
+
+
+
+
+
+Remediation
+------------
+
+	1. If you use XML just as simple data storage, it might be possible to switch to a less complex data format, such as JSON, 
+	   and avoid the risk of being vulnerable to XXE.
+
+	2. Patch and Upgrade all XML parsers and third-party libraries that use them. later versions often include security improvements.
+
+	3. Disable XML external entity and DTD processing in all XML parsers in the application.

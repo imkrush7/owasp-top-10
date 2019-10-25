@@ -1,0 +1,65 @@
+You can’t correct something that you don’t know.
+
+
+6. Security Misconfiguration:
+------------------------------
+------------------------------
+
+	Security Misconfiguration is simply defined as failing to implement all the security controls for a server or web application, 
+	or implementing the security controls, but doing so with errors.
+
+Security Misconfiguration arises when Security settings are defined, implemented, and maintained as defaults or misconfigured. 
+Good security requires a secure configuration defined and deployed for the application, web server, database server, and platform. 
+It is equally important to have the software up to date.
+
+
+
+Improper server or web application configuration leading to various flaws:
+
+    Debugging enabled.
+    Incorrect folder permissions.
+    Using default accounts or passwords.
+    Setup/Configuration pages enabled.
+  
+
+
+
+
+Is the Application Vulnerable:
+-------------------------------
+
+1. Default accounts are not changed.
+	Attacker discovers the standard admin pages are on your server, logs in with default passwords, and takes over
+
+2. Unnecessary features are enabled or installed (e.g. unnecessary ports, services, pages, accounts, or privileges).
+
+3. Error handling reveals stack traces or other overly informative error messages to users.
+	Attackers love the extra information error messages provide.
+
+4. Directory listing is not disabled on your server
+	Attacker discovers they can simply list directories to find any file. 
+	Attacker finds and downloads all your compiled Java classes, which they decompile and reverse engineer to get all your custom code. 
+	They then find a serious access control flaw in your application.
+
+5. The software is out of date or vulnerable
+
+6. App server comes with sample applications that are not removed from your production server
+	These sample applications have well-known security flaws attackers can use to compromise your server.
+
+
+
+
+Prevent Security Misconfiguration
+-----------------------------------
+
+The principle of least privilege: Everything off by default.
+
+    1. Disable administration interfaces.
+    2. Enforcing strong access controls
+    3. Disable use of default accounts/passwords.
+    4. Configure server to prevent unauthorized access, directory listing, etc.
+    5. Encrypting data in transit or at rest.
+    6. Keeping software up to date
+    7. Developing a repeatable patching schedule
+    8. Disable debugging.
+    9. Run security scanners and perform regular system audits  
